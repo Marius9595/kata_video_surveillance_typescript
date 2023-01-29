@@ -6,7 +6,8 @@ export class VideoSurveillanceController {
 	public start_surveillance() {
 		if (this.motion_sensor.isDetectingMotion()) {
 			this.video_recorder.startRecording();
+		} else {
+			this.video_recorder.stopRecording();
 		}
 	}
-	public stop_surveillance() {}
 }

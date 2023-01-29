@@ -11,6 +11,7 @@ import { VideoSurveillanceController } from '../core/video_surveillance_controll
 import { FakeClock } from './fakes';
 import { StubMotionSensor } from './stub_motion_sensor';
 import { SpyVideoRecorder } from './spies';
+import {MockMotionSensor} from "./mocks";
 
 describe('Video surveillance should', () => {
 	it('start video recording when motion sensor is activated', () => {
@@ -31,6 +32,20 @@ describe('Video surveillance should', () => {
 		video_recorder.on = true;
 		const video_controller = new VideoSurveillanceController(
 			StubMotionSensor.with_response(false),
+			video_recorder,
+			new FakeClock()
+		);
+
+		video_controller.start_surveillance();
+
+		expect(video_recorder.on).toBeFalsy();
+	});
+
+	it('stop video recording when motion sensor fails', () => {
+		const video_recorder = new SpyVideoRecorder();
+		video_recorder.on = true;
+		const video_controller = new VideoSurveillanceController(
+			new MockMotionSensor(),
 			video_recorder,
 			new FakeClock()
 		);

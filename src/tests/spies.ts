@@ -8,3 +8,11 @@ export class SpyVideoRecorder implements VideoRecorder {
 		this.on = false;
 	}
 }
+
+export class SpyMotionSensor implements MotionSensor {
+	public checks = 0;
+	isDetectingMotion(): boolean {
+		this.checks++;
+		return this.checks % 2 != 0;
+	}
+}

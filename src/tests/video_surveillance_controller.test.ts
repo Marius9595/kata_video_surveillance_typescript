@@ -8,10 +8,11 @@
  */
 
 import { VideoSurveillanceController } from '../core/video_surveillance_controller';
-import { FakeClock, FakeVideoRecorder } from './fakes';
-import { StubClock, StubMotionSensor } from './stubs';
+import { FakeVideoRecorder } from './fakes';
+import { StubMotionSensor } from './stubs';
 import { SpyMotionSensor, SpyVideoRecorder } from './spies';
 import { MockMotionSensor } from './mocks';
+import { Timer } from '../core/custom_clock';
 
 describe('Video surveillance should', () => {
 	it('start video recording when motion sensor is activated', () => {
@@ -19,12 +20,15 @@ describe('Video surveillance should', () => {
 		const video_controller = new VideoSurveillanceController(
 			StubMotionSensor.with_response(true),
 			video_recorder,
-			new FakeClock()
+			new Timer()
 		);
 
 		video_controller.start_surveillance();
 
-		expect(video_recorder.on).toBeTruthy();
+		setTimeout(() => {
+			video_controller.stop_surveillance();
+			expect(video_recorder.on).toBeFalsy();
+		}, 1000);
 	});
 
 	it('stop video recording when motion sensor is not activated', () => {
@@ -33,37 +37,41 @@ describe('Video surveillance should', () => {
 		const video_controller = new VideoSurveillanceController(
 			StubMotionSensor.with_response(false),
 			video_recorder,
-			new FakeClock()
+			new Timer()
 		);
 
 		video_controller.start_surveillance();
 
-		expect(video_recorder.on).toBeFalsy();
+		setTimeout(() => {
+			video_controller.stop_surveillance();
+			expect(video_recorder.on).toBeFalsy();
+		}, 1000);
 	});
 
 	it('stop video recording when motion sensor fails', () => {
 		const video_recorder = new SpyVideoRecorder();
 		video_recorder.on = true;
-		const video_controller = new VideoSurveillanceController(new MockMotionSensor(), video_recorder, new FakeClock());
+		const video_controller = new VideoSurveillanceController(new MockMotionSensor(), video_recorder, new Timer());
 
 		video_controller.start_surveillance();
 
-		expect(video_recorder.on).toBeFalsy();
+		setTimeout(() => {
+			video_controller.stop_surveillance();
+			expect(video_recorder.on).toBeFalsy();
+		}, 1000);
 	});
 
 	it('check motion sensor each second', () => {
 		const motion_sensor = new SpyMotionSensor();
-		const time_test_in_seconds = 3;
-		const video_controller = new VideoSurveillanceController(
-			motion_sensor,
-			new FakeVideoRecorder(),
-			StubClock.with_lifetime_working(time_test_in_seconds)
-		);
+		const intervals_per_seconds = 3;
+		const video_controller = new VideoSurveillanceController(motion_sensor, new FakeVideoRecorder(), new Timer());
 
 		video_controller.start_surveillance();
-		setTimeout(video_controller.stop_surveillance, time_test_in_seconds * 1000);
 
-		const checks_expected = 1 * time_test_in_seconds;
-		expect(motion_sensor.checks).toBe(checks_expected);
+		const checks_per_interval = 1 * intervals_per_seconds;
+		setTimeout(() => {
+			video_controller.stop_surveillance();
+			expect(motion_sensor.checks).toBe(checks_per_interval);
+		}, intervals_per_seconds * 1000);
 	});
 });

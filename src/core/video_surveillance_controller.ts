@@ -1,4 +1,4 @@
-import { Timer } from './custom_clock';
+import { Timer } from './timer';
 
 export class VideoSurveillanceController {
 	constructor(

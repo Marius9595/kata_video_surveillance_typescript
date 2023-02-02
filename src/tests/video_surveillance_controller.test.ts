@@ -12,7 +12,7 @@ import { FakeVideoRecorder } from './fakes';
 import { StubMotionSensor } from './stubs';
 import { SpyMotionSensor, SpyVideoRecorder } from './spies';
 import { MockMotionSensor } from './mocks';
-import { Timer } from '../core/custom_clock';
+import { Timer } from '../core/timer';
 
 describe('Video surveillance should', () => {
 	it('start video recording when motion sensor is activated', () => {

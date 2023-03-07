@@ -1,26 +1,11 @@
 # Kata Video Surveillance
 
-The context of the kata is the following:
+A program capable of implementing a surveillance system/product consisting of a motion sensor and a video recorder is required.
 
-A security company needs a software to control its new product. It consist an innovative machine that can surveillance automatically when it detects motion with  a sensor, giving a video evidence. Then, you, as developer, have to build that controller. However, just ones can know the details of product, so they will give you the following interfaces in order to know how to interact with it.
+It is mentioned to us that upon motion detection, the event is recorded. As long as there is no motion detection, there should be no recording. It is possible that the sensor may no longer be available.
 
-```Typescript
-interface MotionSensor {
-  isDetectingMotion(): boolean;
-}
+No information is available about the APIs of each artifact, you have to be able to create your own elements capable of consuming them and hiding those details to show that the controller is working properly.
 
-interface VideoRecorder {
-  startRecording(): void;
-  stopRecording(): void;
-}
-
-```
-Once you know this. In the meeting with bussiness, they ask you the following requirements that controller must meet:
-
-- Video recorder does not record if no motion is detected
-- Video recorder start a recording when motion is detected
-- If sensor throw errors, the video recording must stop
-- Controller should check motion sensor each second
 
 ## Instrucciones
 * `npm upgrade`

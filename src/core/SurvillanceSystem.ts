@@ -1,13 +1,18 @@
+import { Controller } from "./Controller";
 import { MotionSensor } from "./MotionSensor";
-import { VideoRecorder } from "./VideoRecorder";
 
-export class SurveillanceSystem{
-    private videorRecorder: VideoRecorder
+export class SurveillanceSystem {
+    private controller: Controller;
+    private motionSensor: MotionSensor;
 
-    private constructor(videoRecorder){
-        this.videorRecorder = videoRecorder;
+    private constructor(controller: Controller, motionSensor: MotionSensor){
+        this.controller = controller;
+        this.motionSensor = motionSensor;
+    }    
+ 
+
+    public static create(controller: Controller, motionSensor: MotionSensor){
     }
 
-    public static create(motionSensor: MotionSensor, videorRecorder: VideoRecorder){
-    }
+
 }

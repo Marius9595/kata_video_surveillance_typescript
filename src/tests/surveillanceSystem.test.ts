@@ -3,6 +3,7 @@ import { MotionDetected } from "./../core/sensor-events";
 
 import { MockMotionSensor } from "./MockMotionSensor";
 import { MockVideoRecorder } from "./MockVideoRecorder";
+import { Controller } from "../core/Controller";
 
 
 describe('surveillance system should', ()=>{
@@ -10,8 +11,9 @@ describe('surveillance system should', ()=>{
 
         const motionSensor = new MockMotionSensor();
         const videoRecorder = new MockVideoRecorder();
+        const controller = new Controller(videoRecorder);
         
-        const surveillanceSystem = SurveillanceSystem.create(motionSensor, videoRecorder);
+        const surveillanceSystem = SurveillanceSystem.create(controller, motionSensor);
         motionSensor.notify(new MotionDetected());
 
         expect(videoRecorder.isRecording).toBeTruthy();

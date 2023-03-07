@@ -1,10 +1,11 @@
+import { Listener } from "../core/Listener";
 import { MotionSensor } from "../core/MotionSensor";
+import { SensorEvent } from "../core/sensor-events";
 
 export class MockMotionSensor implements MotionSensor{
-    notify(SensorEvent: any): void {
-
+    
+    notify(SensorEvent: SensorEvent): void {
     }
-    attach(Listener: any): void {
-        throw new Error("Method not implemented.");
+    attach(listener: Listener): void {
     }
 }

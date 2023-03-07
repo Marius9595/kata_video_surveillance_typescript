@@ -1,4 +1,7 @@
+import { Listener } from "./Listener"
+import { SensorEvent } from "./sensor-events"
+
 export interface MotionSensor{
-    notify(SensorEvent):void
-    attach(Listener):void
+    notify(sensorEvent: SensorEvent):void
+    attach(listener: Listener):void
 }

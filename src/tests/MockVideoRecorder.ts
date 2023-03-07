@@ -8,7 +8,7 @@ export class MockVideoRecorder implements VideoRecorder{
         this.isRecording = true;
     }
     stopRecording(): void {
-        throw new Error("Method not implemented.");
+        this.isRecording = false;
     }
 
 }

@@ -8,12 +8,11 @@ import { Controller } from "../core/Controller";
 
 describe('surveillance system should', ()=>{
     it('start recording if any motion is detected', () => {
-
         const motionSensor = new MockMotionSensor();
         const videoRecorder = new MockVideoRecorder();
         const controller = new Controller(videoRecorder);
-        
         const surveillanceSystem = SurveillanceSystem.create(controller, motionSensor);
+        
         motionSensor.notify(new MotionDetected());
 
         expect(videoRecorder.isRecording).toBeTruthy();

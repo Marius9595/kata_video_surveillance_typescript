@@ -10,9 +10,8 @@ export class SurveillanceSystem {
         this.motionSensor = motionSensor;
     }    
  
-
     public static create(controller: Controller, motionSensor: MotionSensor){
+        motionSensor.attach(controller);
+        return new SurveillanceSystem(controller, motionSensor);
     }
-
-
 }

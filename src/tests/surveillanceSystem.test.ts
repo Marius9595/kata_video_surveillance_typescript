@@ -11,7 +11,7 @@ describe('surveillance system should', ()=>{
         const motionSensor = new MockMotionSensor();
         const videoRecorder = new MockVideoRecorder();
         
-        const surveillanceSystem = new SurveillanceSystem.create(motionSensor, videoRecorder);
+        const surveillanceSystem = SurveillanceSystem.create(motionSensor, videoRecorder);
         motionSensor.notify(new MotionDetected());
 
         expect(videoRecorder.isRecording).toBeTruthy();

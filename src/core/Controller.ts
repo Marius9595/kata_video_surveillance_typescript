@@ -1,5 +1,5 @@
 import { Listener } from "./Listener";
-import { MotionDetected, NoMotionDetected, SensorEvent } from "./sensor-events";
+import { MotionDetected, NoMotionDetected, NotAvailable, SensorEvent } from "./sensor-events";
 import { VideoRecorder } from "./VideoRecorder";
 
 export class Controller implements Listener{
@@ -12,6 +12,8 @@ export class Controller implements Listener{
         if (sensorEvent instanceof MotionDetected){
             this.videoRecorder.starRecording();
         }else if(sensorEvent instanceof NoMotionDetected){
+            this.videoRecorder.stopRecording();
+        }else if(sensorEvent instanceof NotAvailable){
             this.videoRecorder.stopRecording();
         }
     }
